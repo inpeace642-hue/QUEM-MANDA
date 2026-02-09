@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QUEM MANDA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: arial, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('foto.jpg') center center / cover no-repeat;
+      filter: brightness(0.9);
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba(0,0,0,0.25);
+    }
+
+    button {
+      padding: 16px 36px;
+      font-size: 18px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      cursor: pointer;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button.glitch::before,
+    button.glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.9);
+      color: #000;
+    }
+
+    button.glitch::before {
+      transform: translate(2px, -2px);
+      clip-path: inset(0 0 50% 0);
+      animation: glitch 0.3s infinite;
+    }
+
+    button.glitch::after {
+      transform: translate(-2px, 2px);
+      clip-path: inset(50% 0 0 0);
+      animation: glitch 0.3s infinite reverse;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    .rotate-warning {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+      z-index: 10;
+    }
+
+    @media screen and (orientation: landscape) {
+      .rotate-warning { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div class="overlay">
+    <button data-text="QUEM MANDA" onmousedown="glitchOn(this)" onmouseup="glitchOff(this)" onclick="goToVideo()">QUEM MANDA</button>
+  </div>
+
+  <div class="rotate-warning">
+    <h1>VIRE O CELULAR PARA TER UMA EXPERIÊNCIA MELHOR</h1>
+  </div>
+
+  <audio id="siren-audio" src="sirene.mp3" loop></audio>
+
+  <script>
+    document.body.addEventListener('click', function() {
+      const audio = document.getElementById('siren-audio');
+      if (audio.paused) audio.play();
+    }, { once: true });
+
+    function goToVideo() {
+      window.location.href = "https://www.youtube.com/"; // TROQUE PELO LINK DO VÍDEO
+    }
+
+    function checkOrientation() {
+      const warning = document.querySelector('.rotate-warning');
+      if (window.innerWidth > window.innerHeight) {
+        warning.style.display = 'none';
+      } else {
+        warning.style.display = 'flex';
+      }
+    }
+
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+
+    function glitchOn(btn) {
+      btn.classList.add('glitch');
+    }
+
+    function glitchOff(btn) {
+      btn.classList.remove('glitch');
+    }
+  </script>
+
+</body>
+</html>
