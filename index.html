@@ -131,7 +131,11 @@
       }
     }
 
-    window.addEventListener('load', checkOrientation);
+    window.addEventListener('load', function() {
+      const warning = document.querySelector('.rotate-warning');
+      warning.style.display = 'flex';
+      checkOrientation();
+    });
     window.addEventListener('resize', checkOrientation);
 
     function glitchOn(btn) {
